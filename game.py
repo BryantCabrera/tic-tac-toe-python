@@ -25,7 +25,9 @@ def play_game():
     else:
         print('this is not a valid placement')
     if game_state['gameboard'][inputRow][inputCol] == ' ':
-        game_state['gameboard'][inputRow][inputCol] = game_state['turn'] 
+        game_state['gameboard'][inputRow][inputCol] = game_state['turn']
+    else:
+        play_game()
     print_board()
     check_win()
 
