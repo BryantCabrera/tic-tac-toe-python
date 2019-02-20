@@ -16,19 +16,19 @@ def play_game():
     playerInput = input()
     inputRow = int(playerInput[1]) - 1
     inputCol = -1
-    if playerInput[0] == 'A':
+    if playerInput[0] == 'A' or playerInput[0] == 'a':
         inputCol = 0
-    elif playerInput[0] == 'B':
+    elif playerInput[0] == 'B' or playerInput[0] == 'b':
         inputCol = 1
-    elif playerInput[0] == 'C':
+    elif playerInput[0] == 'C' or playerInput[0] == 'c':
         inputCol = 2
     else:
         print('this is not a valid placement')
     game_state['gameboard'][inputRow][inputCol] = game_state['turn']  
     print_board()
-    checkWin()
+    check_win()
 
-def checkWin():
+def check_win():
     #check row winner
     for row in game_state['gameboard']:
         rowSum = 0
