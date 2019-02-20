@@ -3,7 +3,7 @@ print('----------------------\nLet\'s play Py-Pac-Poe!\n----------------------')
 game_state = {
     'turn': 1,
     'gameboard': [], #gameboard array is an array of rows
-    'winner': ''
+    'winner': 0
 }
 
 def init_game():
@@ -29,15 +29,47 @@ def play_game():
     checkWin()
 
 def checkWin():
+    #check row winner
     for row in game_state['gameboard']:
-        sum = 0
+        rowSum = 0
         for i in range(0, 3):
             if row[i] != ' ':
-                sum += abs(row[i])
-        if sum == 3:
+                rowSum += row[i]
+        if abs(rowSum) == 3:
             game_state['winner'] = game_state['turn']
+    
+    #check col winner
+    for j in range(0, 3):
+        colSum = 0
+        for row in game_state['gameboard']:
+            if row[j] != ' ':
+                colSum += row[j]
+        if abs(colSum) == 3:
+            game_state['winner'] = game_state['turn']
+
+    #check diag winner
+    diagDownSum = 0
+    diagUpSum = 0
+    for k in range(0, 3):
+        #check diagonal from top left to bottom right
+        if game_state['gameboard'][k][k] != ' ':
+            diagDownSum += game_state['gameboard'][k][k]
+        if abs(diagDownSum) == 3:
+            game_state['winner'] = game_state['turn']
+            break
+
+        #check diagonal from bottom left to top right
+        
+        for l in (2, -1, -1):
+            if game_state['gameboard'][k][l] != ' ':
+                diagUpSum += game_state['gameboard'][k][l]
+        if abs(diagUpSum) == 3:
+            game_state['winner'] = game_state['turn']
+
     game_state['turn'] *= -1
-    print('~~~~~~~~~~~~~~~~~~~\n' + game_state['winner'] + ' has won the game!\n~~~~~~~~~~~~~~~~~~~') if game_state['winner'] else play_game()
+    print(game_state['winner'], ' this is the winner')
+    # if game_state['winner'] and 
+    print('~~~~~~~~~~~~~~~~~~~\n', game_state['winner'], ' has won the game!\n~~~~~~~~~~~~~~~~~~~') if game_state['winner'] else play_game()
 
 def print_board():
     # gameboard = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
