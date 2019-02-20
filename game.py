@@ -24,7 +24,8 @@ def play_game():
         inputCol = 2
     else:
         print('this is not a valid placement')
-    game_state['gameboard'][inputRow][inputCol] = game_state['turn']  
+    if game_state['gameboard'][inputRow][inputCol] == ' ':
+        game_state['gameboard'][inputRow][inputCol] = game_state['turn'] 
     print_board()
     check_win()
 
@@ -49,7 +50,6 @@ def check_win():
 
     #check diag winner
     diagDownSum = 0
-    diagUpSum = 0
     for k in range(0, 3):
         #check diagonal from top left to bottom right
         if game_state['gameboard'][k][k] != ' ':
@@ -58,12 +58,15 @@ def check_win():
             game_state['winner'] = game_state['turn']
             break
 
-        #check diagonal from bottom left to top right
-        for l in (2, -1, -1):
-            if game_state['gameboard'][k][l] != ' ':
-                diagUpSum += game_state['gameboard'][k][l]
+    #check diagonal from bottom left to top right
+    diagUpSum = 0
+    for m in range(0, 3):
+        for l in range(2, -1, -1):
+            if game_state['gameboard'][m][l] != ' ':
+                diagUpSum += game_state['gameboard'][m][l]
         if abs(diagUpSum) == 3:
             game_state['winner'] = game_state['turn']
+        print(diagUpSum, ' this is diagupsum')
 
     #check tie
     totalSum = 0
@@ -75,7 +78,6 @@ def check_win():
         print('~~~~~~~~~~~~~~~~~~~\nIt was a tie!\n~~~~~~~~~~~~~~~~~~~') 
 
     game_state['turn'] *= -1
-    print(game_state['winner'], ' this is the winner')
     # if game_state['winner'] and 
     print('~~~~~~~~~~~~~~~~~~~\n', game_state['winner'], ' has won the game!\n~~~~~~~~~~~~~~~~~~~') if game_state['winner'] else play_game()
 
