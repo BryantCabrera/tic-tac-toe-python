@@ -59,12 +59,20 @@ def checkWin():
             break
 
         #check diagonal from bottom left to top right
-        
         for l in (2, -1, -1):
             if game_state['gameboard'][k][l] != ' ':
                 diagUpSum += game_state['gameboard'][k][l]
         if abs(diagUpSum) == 3:
             game_state['winner'] = game_state['turn']
+
+    #check tie
+    totalSum = 0
+    for row in game_state['gameboard']:
+        for cell in row:
+            if cell != ' ':
+                totalSum += abs(cell)
+    if totalSum == 9 and not game_state['winner']:
+        print('~~~~~~~~~~~~~~~~~~~\nIt was a tie!\n~~~~~~~~~~~~~~~~~~~') 
 
     game_state['turn'] *= -1
     print(game_state['winner'], ' this is the winner')
