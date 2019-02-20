@@ -3,7 +3,8 @@ print('----------------------\nLet\'s play Py-Pac-Poe!\n----------------------')
 game_state = {
     'turn': 1,
     'gameboard': [], #gameboard array is an array of rows
-    'winner': 0
+    'winner': 0,
+    'tie': False
 }
 
 def init_game():
@@ -27,6 +28,7 @@ def play_game():
     if game_state['gameboard'][inputRow][inputCol] == ' ':
         game_state['gameboard'][inputRow][inputCol] = game_state['turn']
     else:
+        print('~~~~~~~~~~~~~~~~~~~\nThis spot is already taken, please choose another.\n~~~~~~~~~~~~~~~~~~~')
         play_game()
     print_board()
     check_win()
@@ -77,14 +79,14 @@ def check_win():
             if cell != ' ':
                 totalSum += abs(cell)
     if totalSum == 9 and not game_state['winner']:
-        print('~~~~~~~~~~~~~~~~~~~\nIt was a tie!\n~~~~~~~~~~~~~~~~~~~') 
-
+        game_state['tie'] = True
+        print('~~~~~~~~~~~~~~~~~~~\nIt was a tie!\n~~~~~~~~~~~~~~~~~~~')
+    
     game_state['turn'] *= -1
-    # if game_state['winner'] and 
-    print('~~~~~~~~~~~~~~~~~~~\n', game_state['winner'], ' has won the game!\n~~~~~~~~~~~~~~~~~~~') if game_state['winner'] else play_game()
+    if game_state['tie'] == False:
+        print('~~~~~~~~~~~~~~~~~~~\n', game_state['winner'], ' has won the game!\n~~~~~~~~~~~~~~~~~~~') if game_state['winner'] else play_game()
 
 def print_board():
-    # gameboard = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
     gameboard = game_state['gameboard']
     print('\n   A   B   C\n1)', gameboard[0][0],'|', gameboard[0][1], '|', gameboard[0][2],'\n  -----------\n2)', gameboard[1][0],'|', gameboard[1][1], '|', gameboard[1][2],'\n  -----------\n3)', gameboard[2][0],'|', gameboard[2][1], '|', gameboard[2][2],'\n')
 
